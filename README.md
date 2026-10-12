@@ -43,27 +43,27 @@ You can download the zashboard files here:
 
 release:
 
-- [dist.zip (7.81 MB)](https://github.com/RealSeek/zashboard/releases/download/latest/dist.zip) – Includes better font-loading experience.
-- [dist-no-fonts.zip (1.44 MB)](https://github.com/RealSeek/zashboard/releases/download/latest/dist-no-fonts.zip) – No fonts included, uses system fonts only.
-- [dist-cdn-fonts.zip (1.44 MB)](https://github.com/RealSeek/zashboard/releases/download/latest/dist-cdn-fonts.zip) – Fonts loaded from unpkg.com, If you have trouble connecting to unpkg.com, **you may experience slow page loading**.
-- [dist-firasans-only.zip (1.67 MB)](https://github.com/RealSeek/zashboard/releases/download/latest/dist-firasans-only.zip) – Only with FiraSans Font
-- [dist-misans-only.zip (3.54 MB)](https://github.com/RealSeek/zashboard/releases/download/latest/dist-misans-only.zip) – Only with MiSans Font
-- [dist-pingfang-only.zip (3.25 MB)](https://github.com/RealSeek/zashboard/releases/download/latest/dist-pingfang-only.zip) – Only with PingFang Font
-- [dist-sarasa-only.zip (3.67 MB)](https://github.com/RealSeek/zashboard/releases/download/latest/dist-sarasa-only.zip) – Only with Sarasa Font
+- [dist.zip](https://github.com/RealSeek/zashboard/releases/download/latest/dist.zip) – Includes better font-loading experience.
+- [dist-no-fonts.zip](https://github.com/RealSeek/zashboard/releases/download/latest/dist-no-fonts.zip) – No fonts included, uses system fonts only.
+- [dist-cdn-fonts.zip](https://github.com/RealSeek/zashboard/releases/download/latest/dist-cdn-fonts.zip) – Fonts loaded from unpkg.com, If you have trouble connecting to unpkg.com, **you may experience slow page loading**.
+- [dist-firasans-only.zip](https://github.com/RealSeek/zashboard/releases/download/latest/dist-firasans-only.zip) – Only with FiraSans Font
+- [dist-misans-only.zip](https://github.com/RealSeek/zashboard/releases/download/latest/dist-misans-only.zip) – Only with MiSans Font
+- [dist-pingfang-only.zip](https://github.com/RealSeek/zashboard/releases/download/latest/dist-pingfang-only.zip) – Only with PingFang Font
+- [dist-sarasa-only.zip](https://github.com/RealSeek/zashboard/releases/download/latest/dist-sarasa-only.zip) – Only with Sarasa Font
 
 dev:
 
-- [gh-pages.zip (7.81 MB)](https://github.com/RealSeek/zashboard/archive/refs/heads/gh-pages.zip)
-- [gh-pages-no-fonts.zip (1.44 MB)](https://github.com/RealSeek/zashboard/archive/refs/heads/gh-pages-no-fonts.zip)
-- [gh-pages-cdn-fonts.zip (1.44 MB)](https://github.com/RealSeek/zashboard/archive/refs/heads/gh-pages-cdn-fonts.zip)
-- [gh-pages-firasans-only.zip (1.67 MB)](https://github.com/RealSeek/zashboard/archive/refs/heads/gh-pages-firasans-only.zip)
-- [gh-pages-misans-only.zip (3.54 MB)](https://github.com/RealSeek/zashboard/archive/refs/heads/gh-pages-misans-only.zip)
-- [gh-pages-pingfang-only.zip (3.25 MB)](https://github.com/RealSeek/zashboard/archive/refs/heads/gh-pages-pingfang-only.zip)
-- [gh-pages-sarasa-only.zip (3.67 MB)](https://github.com/RealSeek/zashboard/archive/refs/heads/gh-pages-sarasa-only.zip)
+- [gh-pages.zip](https://github.com/RealSeek/zashboard/archive/refs/heads/gh-pages.zip)
+- [gh-pages-no-fonts.zip](https://github.com/RealSeek/zashboard/archive/refs/heads/gh-pages-no-fonts.zip)
+- [gh-pages-cdn-fonts.zip](https://github.com/RealSeek/zashboard/archive/refs/heads/gh-pages-cdn-fonts.zip)
+- [gh-pages-firasans-only.zip](https://github.com/RealSeek/zashboard/archive/refs/heads/gh-pages-firasans-only.zip)
+- [gh-pages-misans-only.zip](https://github.com/RealSeek/zashboard/archive/refs/heads/gh-pages-misans-only.zip)
+- [gh-pages-pingfang-only.zip](https://github.com/RealSeek/zashboard/archive/refs/heads/gh-pages-pingfang-only.zip)
+- [gh-pages-sarasa-only.zip](https://github.com/RealSeek/zashboard/archive/refs/heads/gh-pages-sarasa-only.zip)
 
 ## **Docker Setup**
 
-To run zashboard via Docker, use the following command:
+To run the upstream zashboard via Docker, use the following command (this image does not include the fork's EasyTier changes):
 
 ```
 docker run -d -p 80:80 ghcr.io/zephyruso/zashboard:latest
