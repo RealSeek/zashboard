@@ -235,6 +235,10 @@ export const numberOfChartsInSidebar = useStorage<1 | 2 | 3>(
 )
 const defaultOverviewCardOrder: { card: OVERVIEW_CARD; visible: boolean }[] = [
   {
+    card: OVERVIEW_CARD.EasyTierCard,
+    visible: true,
+  },
+  {
     card: OVERVIEW_CARD.ChartsCard,
     visible: true,
   },
@@ -283,7 +287,9 @@ if (missingCards.length > 0) {
   for (const card of missingCards) {
     const item = { card, visible: true }
 
-    if (card === OVERVIEW_CARD.EarthGlobeCard) {
+    if (card === OVERVIEW_CARD.EasyTierCard) {
+      nextOrder.unshift(item)
+    } else if (card === OVERVIEW_CARD.EarthGlobeCard) {
       const topologyIndex = nextOrder.findIndex(({ card }) => card === OVERVIEW_CARD.TopologyCharts)
       nextOrder.splice(topologyIndex === -1 ? nextOrder.length : topologyIndex, 0, item)
     } else {

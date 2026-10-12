@@ -1,6 +1,23 @@
 import type { LANG_MESSAGE } from './en'
 
 const zhTW: LANG_MESSAGE = {
+  easyTierCard: 'EasyTier 裝置',
+  easyTierDeviceName: '裝置名稱',
+  easyTierConnection: '連線方式',
+  easyTierPublicIP: '公網 IP',
+  easyTierUnnamed: '未命名裝置',
+  easyTierUnknown: '未知',
+  easyTierVia: '經由 {peer}',
+  easyTierUpgradeCore: '請更新 mihomo，目前核心不支援 EasyTier 裝置狀態介面。',
+  easyTierState_stopped: '已停止',
+  easyTierState_created: '已建立',
+  easyTierState_starting: '啟動中',
+  easyTierState_running: '執行中',
+  easyTierState_stopping: '停止中',
+  easyTierConnection_local: '本機',
+  easyTierConnection_p2p: 'P2P 直連',
+  easyTierConnection_relay: '轉發',
+  easyTierConnection_disconnected: '未連線',
   setup: '配置',
   overview: '概覽',
   proxies: '代理',

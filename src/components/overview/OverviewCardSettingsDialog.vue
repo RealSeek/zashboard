@@ -49,6 +49,7 @@ const cardKeyToLabelMap: Record<string, string> = {
   ConnectionHistory: 'connectionHistory',
   RuleHitCountCard: 'ruleHitCountCard',
   HonkStatsCard: 'honkStatsCard',
+  EasyTierCard: 'easyTierCard',
 }
 
 const orderedCards = computed({

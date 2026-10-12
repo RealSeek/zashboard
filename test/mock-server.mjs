@@ -127,9 +127,20 @@ export const createMockServer = async ({
   nodes = 60,
   connections = 300,
   providers: providerCount = 4,
+  easyTierStatus,
 } = {}) => {
   const fixture = buildFixture({ groups, nodes, connections, providers: providerCount })
   const { proxies, providers, nodeNames, activeConnections } = fixture
+  if (easyTierStatus) {
+    proxies['EasyTier / 测试'] = {
+      name: 'EasyTier / 测试',
+      type: 'EasyTier',
+      history: [],
+      alive: true,
+      udp: true,
+    }
+    proxies.GLOBAL.all.push('EasyTier / 测试')
+  }
 
   /*
    * 两个可在运行时改的开关,verify 会用到:
@@ -212,6 +223,9 @@ export const createMockServer = async ({
       return json(res, { proxies })
     }
     if (pathname === '/providers/proxies') return json(res, { providers })
+    if (pathname === '/proxies/EasyTier%20%2F%20%E6%B5%8B%E8%AF%95/easytier' && easyTierStatus) {
+      return json(res, easyTierStatus)
+    }
     if (pathname === '/providers/rules') return json(res, { providers: {} })
     if (pathname === '/rules') return json(res, { rules: [] })
 

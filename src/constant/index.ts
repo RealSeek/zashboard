@@ -409,6 +409,7 @@ export enum OVERVIEW_CARD {
   ConnectionHistory = 'ConnectionHistory',
   RuleHitCountCard = 'RuleHitCountCard',
   HonkStatsCard = 'HonkStatsCard',
+  EasyTierCard = 'EasyTierCard',
 }
 
 export enum MIHOMO {

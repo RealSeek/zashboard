@@ -19,6 +19,7 @@ import OverviewCtrl from '@/components/controls/OverviewCtrl.vue'
 import ChartsCard from '@/components/overview/ChartsCard.vue'
 import ConnectionHistory from '@/components/overview/ConnectionHistory.vue'
 import HonkStatsCard from '@/components/overview/HonkStatsCard.vue'
+import EasyTierCard from '@/components/overview/EasyTierCard.vue'
 import NetworkCard from '@/components/overview/NetworkCard.vue'
 import ProviderTrafficOverview from '@/components/overview/ProviderTrafficOverview.vue'
 import RuleHitCountCard from '@/components/overview/RuleHitCountCard.vue'
@@ -45,5 +46,6 @@ const cardComponents: Record<string, Component> = {
   ConnectionHistory,
   RuleHitCountCard,
   HonkStatsCard,
+  EasyTierCard,
 }
 </script>

@@ -12,6 +12,7 @@ import type {
   Rule,
   RuleProvider,
 } from '@/types'
+import type { EasyTierStatus } from '@/types/easytier'
 import axios from 'axios'
 import { debounce } from 'lodash'
 import ReconnectingWebSocket from 'reconnectingwebsocket'
@@ -22,6 +23,16 @@ export const fetchClashVersion = () => axios.get<{ version: string }>('/version'
 
 export const fetchProxiesAPI = () => {
   return axios.get<{ proxies: Record<string, Proxy> }>('/proxies')
+}
+
+export const fetchEasyTierStatusAPI = (proxy: Proxy, signal: AbortSignal) => {
+  const name = encodeURIComponent(proxy.name)
+  const provider = proxy['provider-name']
+  const path = provider
+    ? `/providers/proxies/${encodeURIComponent(provider)}/${name}/easytier`
+    : `/proxies/${name}/easytier`
+
+  return axios.get<EasyTierStatus>(path, { signal, timeout: 5000 })
 }
 
 export const selectProxyAPI = (proxyGroup: string, name: string) => {

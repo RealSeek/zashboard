@@ -1,6 +1,23 @@
 import type { LANG_MESSAGE } from './en'
 
 const ru: LANG_MESSAGE = {
+  easyTierCard: 'Устройства EasyTier',
+  easyTierDeviceName: 'Имя устройства',
+  easyTierConnection: 'Соединение',
+  easyTierPublicIP: 'Публичный IP',
+  easyTierUnnamed: 'Без имени',
+  easyTierUnknown: 'Неизвестно',
+  easyTierVia: 'через {peer}',
+  easyTierUpgradeCore: 'Обновите mihomo до версии с поддержкой состояния устройств EasyTier.',
+  easyTierState_stopped: 'Остановлено',
+  easyTierState_created: 'Создано',
+  easyTierState_starting: 'Запуск',
+  easyTierState_running: 'Работает',
+  easyTierState_stopping: 'Остановка',
+  easyTierConnection_local: 'Локальное',
+  easyTierConnection_p2p: 'P2P',
+  easyTierConnection_relay: 'Ретрансляция',
+  easyTierConnection_disconnected: 'Нет соединения',
   setup: 'Настройка',
   overview: 'Обзор',
   proxies: 'Прокси',
