@@ -21,10 +21,9 @@ external-ui: E:/Code/Tools/zashboard/dist
 
 ## 控制器接口
 
-- `GET /proxies/{name}/easytier`
-- `GET /providers/proxies/{providerName}/{name}/easytier`
+- `GET /easytier/{name}`
 
-路径参数需要 URL 编码；鉴权复用控制器的 Bearer token。响应包含 `state` 和 `nodes`。设备字段：`peerId`、`hostname`、`ipv4`、`connection`、`nextHopPeerId`、`udpNat`、`tcpNat`、`publicIPs`。`connection` 为 `local`、`p2p`、`relay` 或 `disconnected`。
+路径参数需要 URL 编码；鉴权复用控制器的 Bearer token。mihomo 返回节点、连接和路由状态，zashboard 将其转换为 `state` 和 `nodes`。设备字段：`peerId`、`hostname`、`ipv4`、`connection`、`nextHopPeerId`、`udpNat`、`tcpNat`、`publicIPs`。`connection` 为 `local`、`p2p`、`relay` 或 `disconnected`。
 
 ## 核心验证
 
