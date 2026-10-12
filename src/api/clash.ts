@@ -12,7 +12,7 @@ import type {
   Rule,
   RuleProvider,
 } from '@/types'
-import type { EasyTierStatus } from '@/types/easytier'
+import type { EasyTierControllerStatus, EasyTierDevice, EasyTierStatus } from '@/types/easytier'
 import axios from 'axios'
 import { debounce } from 'lodash'
 import ReconnectingWebSocket from 'reconnectingwebsocket'
@@ -27,12 +27,47 @@ export const fetchProxiesAPI = () => {
 
 export const fetchEasyTierStatusAPI = (proxy: Proxy, signal: AbortSignal) => {
   const name = encodeURIComponent(proxy.name)
-  const provider = proxy['provider-name']
-  const path = provider
-    ? `/providers/proxies/${encodeURIComponent(provider)}/${name}/easytier`
-    : `/proxies/${name}/easytier`
-
-  return axios.get<EasyTierStatus>(path, { signal, timeout: 5000 })
+  return axios
+    .get<EasyTierControllerStatus>(`/easytier/${name}`, { signal, timeout: 5000 })
+    .then(({ data }) => {
+      const direct = new Set(
+        data.peers.flatMap((peer) =>
+          peer.connections.some((connection) => !connection.closed) ? [peer['peer-id']] : [],
+        ),
+      )
+      const nodes: EasyTierDevice[] = []
+      if (data.node) {
+        nodes.push({
+          peerId: data.node['peer-id'],
+          hostname: data.node.hostname,
+          ipv4: data.node.ipv4,
+          udpNat: data.node['udp-nat'],
+          tcpNat: data.node['tcp-nat'],
+          publicIPs: data.node['public-ips'] ?? null,
+          connection: 'local',
+        })
+      }
+      for (const route of data.routes) {
+        if (route['peer-id'] === data.node?.['peer-id']) continue
+        const nextHop = route['next-hop-peer-id-latency-first'] ?? route['next-hop-peer-id']
+        const connection = direct.has(nextHop)
+          ? nextHop === route['peer-id']
+            ? 'p2p'
+            : 'relay'
+          : 'disconnected'
+        nodes.push({
+          peerId: route['peer-id'],
+          hostname: route.hostname,
+          ipv4: route.ipv4,
+          udpNat: route['udp-nat'],
+          tcpNat: route['tcp-nat'],
+          publicIPs: route['public-ips'] ?? null,
+          connection,
+          nextHopPeerId: nextHop,
+        })
+      }
+      return { data: { state: data.state, nodes } satisfies EasyTierStatus }
+    })
 }
 
 export const selectProxyAPI = (proxyGroup: string, name: string) => {
