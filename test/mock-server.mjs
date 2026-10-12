@@ -131,6 +131,39 @@ export const createMockServer = async ({
 } = {}) => {
   const fixture = buildFixture({ groups, nodes, connections, providers: providerCount })
   const { proxies, providers, nodeNames, activeConnections } = fixture
+  const controllerEasyTierStatus = easyTierStatus?.nodes
+    ? {
+        state: easyTierStatus.state,
+        node: (() => {
+          const node = easyTierStatus.nodes.find((item) => item.connection === 'local')
+          return node
+            ? {
+                'peer-id': node.peerId,
+                hostname: node.hostname,
+                ipv4: node.ipv4,
+                'udp-nat': node.udpNat,
+                'tcp-nat': node.tcpNat,
+                'public-ips': node.publicIPs,
+              }
+            : null
+        })(),
+        peers: easyTierStatus.nodes
+          .filter((node) => node.connection !== 'local')
+          .map((node) => ({
+            'peer-id': node.peerId,
+            connections: [{ closed: node.connection === 'disconnected' }],
+          })),
+        routes: easyTierStatus.nodes.map((node) => ({
+          'peer-id': node.peerId,
+          hostname: node.hostname,
+          ipv4: node.ipv4,
+          'next-hop-peer-id': node.nextHopPeerId ?? node.peerId,
+          'udp-nat': node.udpNat,
+          'tcp-nat': node.tcpNat,
+          'public-ips': node.publicIPs,
+        })),
+      }
+    : easyTierStatus
   if (easyTierStatus) {
     proxies['EasyTier / 测试'] = {
       name: 'EasyTier / 测试',
@@ -223,8 +256,8 @@ export const createMockServer = async ({
       return json(res, { proxies })
     }
     if (pathname === '/providers/proxies') return json(res, { providers })
-    if (pathname === '/proxies/EasyTier%20%2F%20%E6%B5%8B%E8%AF%95/easytier' && easyTierStatus) {
-      return json(res, easyTierStatus)
+    if (pathname.startsWith('/easytier/') && controllerEasyTierStatus) {
+      return json(res, controllerEasyTierStatus)
     }
     if (pathname === '/providers/rules') return json(res, { providers: {} })
     if (pathname === '/rules') return json(res, { rules: [] })
