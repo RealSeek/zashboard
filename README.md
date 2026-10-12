@@ -1,5 +1,18 @@
 # zashboard
 
+RealSeek fork: adds EasyTier device information, with vertical cards on mobile so all fields can be read without horizontal scrolling. See [EasyTier setup](./docs/easytier.md).
+
+Every push to `main` builds all seven font variants, updates the [Latest build release](https://github.com/RealSeek/zashboard/releases/tag/latest), and publishes built files to the `gh-pages` branches. No personal access token is required.
+
+For mihomo, use this fork's download URL so dashboard updates keep the EasyTier changes:
+
+```yaml
+external-ui: ui
+external-ui-url: https://github.com/RealSeek/zashboard/releases/download/latest/dist.zip
+```
+
+For system fonts only, use `dist-no-fonts.zip` instead. A branch ZIP is also available at `https://github.com/RealSeek/zashboard/archive/refs/heads/gh-pages.zip`. Raw GitHub URLs serve individual files; use the ZIP download URL for `external-ui-url`.
+
 <p align="center">
   <img src="./readme/pc.png" height="300">
   <img src="./readme/mobile.png" height="300">
@@ -16,7 +29,7 @@ Browser support
 
 ## **Online**
 
-You can access the online zashboard at the following link:
+The following online site hosts the upstream version; use your mihomo controller's `/ui/` to access this fork:
 
 - [Online zashboard](http://board.zash.run.place)
 
@@ -30,23 +43,23 @@ You can download the zashboard files here:
 
 release:
 
-- [dist.zip (7.81 MB)](https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip) – Includes better font-loading experience.
-- [dist-no-fonts.zip (1.44 MB)](https://github.com/Zephyruso/zashboard/releases/latest/download/dist-no-fonts.zip) – No fonts included, uses system fonts only.
-- [dist-cdn-fonts.zip (1.44 MB)](https://github.com/Zephyruso/zashboard/releases/latest/download/dist-cdn-fonts.zip) – Fonts loaded from unpkg.com, If you have trouble connecting to unpkg.com, **you may experience slow page loading**.
-- [dist-firasans-only.zip (1.67 MB)](https://github.com/Zephyruso/zashboard/releases/latest/download/dist-firasans-only.zip) – Only with FiraSans Font
-- [dist-misans-only.zip (3.54 MB)](https://github.com/Zephyruso/zashboard/releases/latest/download/dist-misans-only.zip) – Only with MiSans Font
-- [dist-pingfang-only.zip (3.25 MB)](https://github.com/Zephyruso/zashboard/releases/latest/download/dist-pingfang-only.zip) – Only with PingFang Font
-- [dist-sarasa-only.zip (3.67 MB)](https://github.com/Zephyruso/zashboard/releases/latest/download/dist-sarasa-only.zip) – Only with Sarasa Font
+- [dist.zip (7.81 MB)](https://github.com/RealSeek/zashboard/releases/download/latest/dist.zip) – Includes better font-loading experience.
+- [dist-no-fonts.zip (1.44 MB)](https://github.com/RealSeek/zashboard/releases/download/latest/dist-no-fonts.zip) – No fonts included, uses system fonts only.
+- [dist-cdn-fonts.zip (1.44 MB)](https://github.com/RealSeek/zashboard/releases/download/latest/dist-cdn-fonts.zip) – Fonts loaded from unpkg.com, If you have trouble connecting to unpkg.com, **you may experience slow page loading**.
+- [dist-firasans-only.zip (1.67 MB)](https://github.com/RealSeek/zashboard/releases/download/latest/dist-firasans-only.zip) – Only with FiraSans Font
+- [dist-misans-only.zip (3.54 MB)](https://github.com/RealSeek/zashboard/releases/download/latest/dist-misans-only.zip) – Only with MiSans Font
+- [dist-pingfang-only.zip (3.25 MB)](https://github.com/RealSeek/zashboard/releases/download/latest/dist-pingfang-only.zip) – Only with PingFang Font
+- [dist-sarasa-only.zip (3.67 MB)](https://github.com/RealSeek/zashboard/releases/download/latest/dist-sarasa-only.zip) – Only with Sarasa Font
 
 dev:
 
-- [gh-pages.zip (7.81 MB)](https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip)
-- [gh-pages-no-fonts.zip (1.44 MB)](https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages-no-fonts.zip)
-- [gh-pages-cdn-fonts.zip (1.44 MB)](https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages-cdn-fonts.zip)
-- [gh-pages-firasans-only.zip (1.67 MB)](https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages-firasans-only.zip)
-- [gh-pages-misans-only.zip (3.54 MB)](https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages-misans-only.zip)
-- [gh-pages-pingfang-only.zip (3.25 MB)](https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages-pingfang-only.zip)
-- [gh-pages-sarasa-only.zip (3.67 MB)](https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages-sarasa-only.zip)
+- [gh-pages.zip (7.81 MB)](https://github.com/RealSeek/zashboard/archive/refs/heads/gh-pages.zip)
+- [gh-pages-no-fonts.zip (1.44 MB)](https://github.com/RealSeek/zashboard/archive/refs/heads/gh-pages-no-fonts.zip)
+- [gh-pages-cdn-fonts.zip (1.44 MB)](https://github.com/RealSeek/zashboard/archive/refs/heads/gh-pages-cdn-fonts.zip)
+- [gh-pages-firasans-only.zip (1.67 MB)](https://github.com/RealSeek/zashboard/archive/refs/heads/gh-pages-firasans-only.zip)
+- [gh-pages-misans-only.zip (3.54 MB)](https://github.com/RealSeek/zashboard/archive/refs/heads/gh-pages-misans-only.zip)
+- [gh-pages-pingfang-only.zip (3.25 MB)](https://github.com/RealSeek/zashboard/archive/refs/heads/gh-pages-pingfang-only.zip)
+- [gh-pages-sarasa-only.zip (3.67 MB)](https://github.com/RealSeek/zashboard/archive/refs/heads/gh-pages-sarasa-only.zip)
 
 ## **Docker Setup**
 

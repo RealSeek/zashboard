@@ -4,6 +4,17 @@ zashboard 的概览页会自动显示已配置的 EasyTier 代理及其设备，
 
 设备来自 mihomo 内嵌的 EasyTier 实例，无需额外运行 easytier-cli。NAT 显示「未知」表示 EasyTier 尚未提供检测结果。连接方式按当前选中的路由判断，支持 `latency-first`。
 
+## 自动构建下载
+
+本仓库每次推送到 `main` 都会自动更新 `latest` Release，包含 `dist.zip` 和各字体变体。配置 mihomo：
+
+```yaml
+external-ui: ui
+external-ui-url: https://github.com/RealSeek/zashboard/releases/download/latest/dist.zip
+```
+
+然后通过控制器的 `/ui/` 打开面板；现有面板可点击更新以拉取本仓库构建。只使用系统字体时，将文件名改为 `dist-no-fonts.zip`。仍需搭配支持 EasyTier 状态接口的 mihomo 内核。
+
 ## 使用本地构建
 
 需要同时使用修改后的 mihomo 与 zashboard。已生成：

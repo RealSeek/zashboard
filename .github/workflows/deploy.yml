@@ -4,34 +4,21 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 permissions:
   contents: write
-  pull-requests: write
+
+concurrency:
+  group: dist-release
+  cancel-in-progress: false
 
 jobs:
-  release-please:
-    runs-on: ubuntu-latest
-    outputs:
-      release_created: ${{ steps.release.outputs.release_created }}
-      tag_name: ${{ steps.release.outputs.tag_name }}
-
-    steps:
-      - name: release-please
-        id: release
-        uses: googleapis/release-please-action@v5
-        with:
-          token: ${{ secrets.PAT }}
-          release-type: node
-          target-branch: main
-
-  build-and-deploy:
-    needs: release-please
+  build:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        # Each font variant is published to its own gh-pages branch.
         font:
           - { key: all, suffix: '' }
           - { key: cdn, suffix: '-cdn-fonts' }
@@ -42,90 +29,54 @@ jobs:
           - { key: none, suffix: '-no-fonts' }
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
       - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
 
-      - name: Install and Build 🔧
+      - name: Install and build
         env:
           FONT: ${{ matrix.font.key }}
         run: |
-          pnpm i
+          pnpm install --frozen-lockfile
           pnpm run build
-          echo 'board.zash.run.place' > ./dist/CNAME
+          zip -r dist${{ matrix.font.suffix }}.zip dist
 
-      - name: Deploy 🚀
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist-${{ matrix.font.key }}
+          path: dist${{ matrix.font.suffix }}.zip
+
+      - name: Publish built files
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.PAT }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           publish_branch: gh-pages${{ matrix.font.suffix }}
           force_orphan: true
 
-  release-dist:
-    needs: release-please
+  release:
+    needs: build
     runs-on: ubuntu-latest
-    if: ${{ needs.release-please.outputs.release_created }}
-    strategy:
-      fail-fast: false
-      matrix:
-        font:
-          - { key: all, suffix: '' }
-          - { key: cdn, suffix: '-cdn-fonts' }
-          - { key: firasans, suffix: '-firasans-only' }
-          - { key: misans, suffix: '-misans-only' }
-          - { key: pingfang, suffix: '-pingfang-only' }
-          - { key: sarasa, suffix: '-sarasa-only' }
-          - { key: none, suffix: '-no-fonts' }
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
-      - uses: pnpm/action-setup@v6
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: dist-*
+          merge-multiple: true
+          path: release
 
-      - name: Build and Zip the dist folder
+      - name: Update rolling release
         env:
-          FONT: ${{ matrix.font.key }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          BUILD_SHA: ${{ github.sha }}
         run: |
-          pnpm i
-          pnpm run build
-          zip -r dist${{ matrix.font.suffix }}.zip dist
-
-      - name: Upload to GitHub Release
-        uses: softprops/action-gh-release@v3
-        with:
-          files: dist${{ matrix.font.suffix }}.zip
-          tag_name: ${{ needs.release-please.outputs.tag_name }}
-
-  release-image:
-    needs: release-please
-    runs-on: ubuntu-latest
-    if: ${{ needs.release-please.outputs.release_created }}
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: set up QEMU
-        uses: docker/setup-qemu-action@v4
-
-      - name: set up docker buildx
-        uses: docker/setup-buildx-action@v4
-        id: buildx
-
-      - name: login to ghcr.io
-        uses: docker/login-action@v4
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.PAT }}
-
-      - name: build and publish ghcr.io docker image
-        uses: docker/build-push-action@v7
-        with:
-          context: .
-          builder: ${{ steps.buildx.outputs.name }}
-          file: Dockerfile
-          platforms: linux/amd64,linux/arm64,linux/arm/v7
-          push: true
-          tags: |
-            ghcr.io/zephyruso/zashboard:latest
-            ghcr.io/zephyruso/zashboard:${{ needs.release-please.outputs.tag_name }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          printf 'Automatically built from main commit `%s`. Updated on every push to main.\n' "$BUILD_SHA" > release-notes.md
+          if gh release view latest >/dev/null 2>&1; then
+            gh api --method PATCH "repos/$GH_REPO/git/refs/tags/latest" -f sha="$BUILD_SHA" -F force=true
+            gh release edit latest --title 'Latest build' --notes-file release-notes.md --latest
+          else
+            gh release create latest --target "$BUILD_SHA" --title 'Latest build' --notes-file release-notes.md --latest
+          fi
+          gh release upload latest release/dist*.zip --clobber
