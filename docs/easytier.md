@@ -8,6 +8,8 @@ zashboard 的概览页会自动显示已配置的 EasyTier 代理及其设备，
 
 本仓库每次推送到 `main` 都会自动更新 `latest` Release，包含 `dist.zip` 和各字体变体。配置 mihomo：
 
+也可在 GitHub 的 Actions → Build and Deploy → Run workflow 手动构建。`gh-pages` 分支保存编译后的静态文件；`external-ui-url` 应使用下方 ZIP 地址，不使用单个文件的 raw 地址。
+
 ```yaml
 external-ui: ui
 external-ui-url: https://github.com/RealSeek/zashboard/releases/download/latest/dist.zip
