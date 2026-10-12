@@ -133,6 +133,7 @@ try {
   console.log(`PASS: all mobile device fields fit at 390px and 320px; screenshot ${shot}`)
   const remote = status.nodes.find((node) => node.connection === 'relay')
   remote.connection = 'p2p'
+  remote.nextHopPeerId = remote.peerId
   remote.udpNat = 'PortRestricted'
   assert.notEqual(
     await waitFor(
